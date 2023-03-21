@@ -21,3 +21,13 @@ async def root(submit: Submit):
         msg = "Indentation error: \n"+str(e)
     print(passed,msg)
     return SolutionResponse(passed=passed, msg=msg)
+
+# TODO: compile C++
+@app.post("/C++/{id}")
+async def root(submit: Submit):
+    pass
+
+# TODO: compile Java
+@app.post("/Java/{id}")
+async def root(submit: Submit):
+    pass

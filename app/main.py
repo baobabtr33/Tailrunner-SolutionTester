@@ -1,6 +1,7 @@
 from fastapi import FastAPI
 from pydantic import BaseModel
-from tester import Tester
+from fastapi.middleware.cors import CORSMiddleware
+from .tester import Tester
 
 class Submit(BaseModel):
     code: str
@@ -11,7 +12,15 @@ class SolutionResponse(BaseModel):
 
 app = FastAPI()
 
-@app.post("/Python/{id}")
+app.add_middleware(
+    CORSMiddleware,
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+    allow_origins=["*"],
+)
+
+@app.post("/fast/Python/{id}")
 async def root(submit: Submit, id: int):
     try:
         usertest = Tester(code = submit.code, questionId = id)
@@ -26,11 +35,11 @@ async def root(submit: Submit, id: int):
     return SolutionResponse(passed=passed, msg=msg)
 
 # TODO: compile C++ 
-@app.post("/C++/{id}")
+@app.post("/fast/C++/{id}")
 async def root(submit: Submit, id: int):
     pass
 
 # TODO: compile Java
-@app.post("/Java/{id}")
+@app.post("/fast/Java/{id}")
 async def root(submit: Submit, id: int):
     pass

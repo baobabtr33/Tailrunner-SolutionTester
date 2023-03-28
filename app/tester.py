@@ -1,5 +1,5 @@
 from typing import List
-import question_testcase
+from . import question_testcase
 
 # allow for user code to import
 import collections

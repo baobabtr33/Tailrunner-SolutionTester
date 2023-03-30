@@ -8,7 +8,7 @@ from collections import *
 
 class Tester:
     def __init__(self, code, questionId):
-        self.checkVulnerability(code)
+        self.checkVulnerability(code, questionId)
 
         # exectue code in string 
         exec(code)
@@ -31,9 +31,11 @@ class Tester:
         return True, "Correct, passed {}/{}\n".format(count, 
                                                     len(self.questionTestcase))
     
-    def checkVulnerability(self, code):
+    def checkVulnerability(self, code, questionId):
         check_code = code.replace(' ','').replace('\n','')
         if "importos" in check_code:
             raise Exception('You cannot import library "os" for this platform')
         if "importsys" in check_code:
             raise Exception('You cannot import library "sys" for this platform')
+        if questionId not in question_testcase.info.keys():
+            raise Exception('Test Environment not ready for Question',questionId)

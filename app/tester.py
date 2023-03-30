@@ -3,6 +3,8 @@ from . import question_testcase
 
 # allow for user code to import
 import collections
+import heapq
+from collections import *
 
 class Tester:
     def __init__(self, code, questionId):
@@ -15,8 +17,7 @@ class Tester:
         self.testInformation = question_testcase.info[questionId]
         self.Solution = locals()['Solution']()
         self.userFunc = getattr(self.Solution, self.testInformation["attr"])
-        self.questionTestcase = self.testInformation["testcase"]
-        print(self.testInformation)
+        self.questionTestcase = self.testInformation["testcase"].copy() # copy -since python pass by reference
     
     def exectuteTest(self):
         count = 0

@@ -31,7 +31,7 @@ async def root(submit: Submit, id: int):
     except Exception as e:
         passed = False
         msg = str(e)
-    print("root", msg)
+    print("msg to client: ", msg)
     return SolutionResponse(passed=passed, msg=msg)
 
 # TODO: compile C++ 

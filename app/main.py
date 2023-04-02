@@ -23,21 +23,24 @@ app.add_middleware(
 @app.post("/fast/Python/{id}")
 async def root(submit: Submit, id: int):
     try:
-        usertest = Tester(code = submit.code, questionId = id)
+        usertest = Tester(code = submit.code, question_id = id)
         passed, msg = usertest.exectuteTest()
     except IndentationError as e:
         passed = False
         msg = "Indentation error: \n"+str(e)
     except Exception as e:
         passed = False
+        print(e)
         msg = str(e)
     print("msg to client: ", msg)
     return SolutionResponse(passed=passed, msg=msg)
+
 
 # TODO: compile C++ 
 @app.post("/fast/C++/{id}")
 async def root(submit: Submit, id: int):
     pass
+
 
 # TODO: compile Java
 @app.post("/fast/Java/{id}")

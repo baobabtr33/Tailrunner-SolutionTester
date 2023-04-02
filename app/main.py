@@ -9,6 +9,7 @@ class Submit(BaseModel):
 class SolutionResponse(BaseModel):
     passed: bool
     msg: str
+    print_msg: str 
 
 app = FastAPI()
 
@@ -24,7 +25,7 @@ app.add_middleware(
 async def root(submit: Submit, id: int):
     try:
         usertest = Tester(code = submit.code, question_id = id)
-        passed, msg = usertest.exectuteTest()
+        passed, print_msg, msg = usertest.exectuteTest()
     except IndentationError as e:
         passed = False
         msg = "Indentation error: \n"+str(e)
@@ -33,7 +34,7 @@ async def root(submit: Submit, id: int):
         print(e)
         msg = str(e)
     print("msg to client: ", msg)
-    return SolutionResponse(passed=passed, msg=msg)
+    return SolutionResponse(passed=passed, print_msg=print_msg, msg=msg)
 
 
 # TODO: compile C++ 

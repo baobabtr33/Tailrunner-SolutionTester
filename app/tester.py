@@ -1,5 +1,7 @@
 from typing import List
 from . import question_testcase
+from io import StringIO
+import sys
 
 # allow for user code to import
 import collections
@@ -20,15 +22,20 @@ class Tester:
         user_solution = locals()['Solution']()
         user_func = getattr(user_solution, self.test_information["attr"])
         
+        user_print = StringIO()
+        sys.stdout = user_print
+
         count = 0
         for answer, case in self.question_testcase:
             if user_func(*case) == answer:
                 count += 1
             else:
-                return False, "Incorrect, passed {}/{} \n Incorrect Case: {}".format(count,
-                                                    len(self.question_testcase), 
-                                                    case)
-        return True, "Correct, passed {}/{}\n".format(count, 
+                sys.stdout = sys.__stdout__
+                return False, user_print.getvalue(), "Incorrect, passed {}/{} \n Incorrect Case: {}".format(count,
+                                                                                    len(self.question_testcase), 
+                                                                                    case)
+        sys.stdout = sys.__stdout__
+        return True, user_print.getvalue(), "Correct, passed {}/{}\n".format(count, 
                                                     len(self.question_testcase))
     
 

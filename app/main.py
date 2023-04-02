@@ -23,6 +23,7 @@ app.add_middleware(
 
 @app.post("/fast/Python/{id}")
 async def root(submit: Submit, id: int):
+    print_msg = ""
     try:
         usertest = Tester(code = submit.code, question_id = id)
         passed, print_msg, msg = usertest.exectuteTest()

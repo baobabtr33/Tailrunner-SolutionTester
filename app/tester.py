@@ -15,7 +15,8 @@ class Tester:
         self.code = code
         self.test_information = question_testcase.info[question_id]
         self.question_testcase = self.test_information["testcase"].copy() # copy -since python pass by reference
-    
+        self.logic = self.test_information["logic"]
+
     def exectuteTest(self):
         # exectue code in string 
         exec(self.code)
@@ -26,14 +27,16 @@ class Tester:
         sys.stdout = user_print
 
         count = 0
-        for answer, case in self.question_testcase:
-            if user_func(*case) == answer:
+        for test_answer, test_case in self.question_testcase:
+            user_answer = user_func(*test_case)
+
+            if self.logic(user_answer,test_answer):
                 count += 1
             else:
                 sys.stdout = sys.__stdout__
                 return False, user_print.getvalue(), "Incorrect, passed {}/{} \n Incorrect Case: {}".format(count,
                                                                                     len(self.question_testcase), 
-                                                                                    case)
+                                                                                    test_case)
         sys.stdout = sys.__stdout__
         return True, user_print.getvalue(), "Correct, passed {}/{}\n".format(count, 
                                                     len(self.question_testcase))

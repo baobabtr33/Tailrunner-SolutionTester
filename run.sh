@@ -1,1 +1,1 @@
-uvicorn app.main:app --reload --port 9000 
+uvicorn src.app.main:app --reload --port 9000 

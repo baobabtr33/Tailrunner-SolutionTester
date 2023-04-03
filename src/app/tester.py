@@ -9,13 +9,16 @@ import heapq
 import time
 from collections import *
 
+
 class Tester:
     def __init__(self, code, question_id):
-        self.checkVulnerability(code, question_id)
+        self.checkVulnerability(code)
         self.code = code
         self.test_information = question_testcase.info[question_id]
-        self.question_testcase = self.test_information["testcase"].copy() # copy -since python pass by reference
         self.logic = self.test_information["logic"]
+        
+        # copy -since python pass by reference
+        self.question_testcase = self.test_information["testcase"].copy() 
 
     def exectuteTest(self):
         # exectue code in string 
@@ -42,11 +45,9 @@ class Tester:
                                                     len(self.question_testcase))
     
 
-    def checkVulnerability(self, code, question_id):
+    def checkVulnerability(self, code):
         check_code = code.replace(' ','').replace('\n','')
         if "importos" in check_code:
             raise Exception('You cannot import library "os" for this platform')
         if "importsys" in check_code:
             raise Exception('You cannot import library "sys" for this platform')
-        if question_id not in question_testcase.info.keys():
-            raise Exception('Test Environment not ready for Question',question_id)

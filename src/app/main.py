@@ -1,6 +1,7 @@
-from fastapi import FastAPI
+from fastapi import FastAPI, HTTPException
 from pydantic import BaseModel
 from fastapi.middleware.cors import CORSMiddleware
+from . import question_testcase
 from .tester import Tester
 
 class Submit(BaseModel):
@@ -22,7 +23,10 @@ app.add_middleware(
 )
 
 @app.post("/fast/Python/{id}")
-async def root(submit: Submit, id: int):
+async def process_user_code(submit: Submit, id: int):
+    if id not in question_testcase.info.keys():
+        raise HTTPException(status_code=404, detail="Question test case not found")
+
     print_msg = ""
     try:
         usertest = Tester(code = submit.code, question_id = id)

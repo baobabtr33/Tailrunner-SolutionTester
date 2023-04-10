@@ -1,11 +1,11 @@
 from fastapi.testclient import TestClient
-
+from .answer import answer
 from app.main import app
 
 client = TestClient(app)
 
 def test_process_user_code():
-    response = client.post("/fast/Python/1", json={"code": "class Solution:\n    def listSum(self, lst: List[int]) -> int:  return sum(lst)"})
+    response = client.post("/fast/Python/1", json={"code": answer[1]})
     assert response.status_code == 200
     assert response.json() == {"passed": True, "print_msg": "", "msg": "Correct, passed 5/5\n"}
 
@@ -29,3 +29,8 @@ def test_process_user_code_limit_sys_import():
     assert response.status_code == 200
     assert response.json() ==  {'passed': False, 'msg': 'You cannot import library "sys" for this platform', 'print_msg': ''}
 
+def test_check_valid_testcase():
+    for (id, code) in answer.items():
+        response = client.post("/fast/Python/"+str(id), json={"code": code})
+        assert response.status_code == 200
+        assert response.json().get("passed") ==  True

@@ -7,6 +7,7 @@ import sys
 import collections
 import heapq
 import time
+import itertools
 from collections import *
 
 
@@ -16,7 +17,7 @@ class Tester:
         self.code = code
         self.test_information = question_testcase.info[question_id]
         self.logic = self.test_information["logic"]
-        
+
         # copy -since python pass by reference
         self.question_testcase = self.test_information["testcase"].copy() 
 
@@ -47,7 +48,7 @@ class Tester:
 
     def checkVulnerability(self, code):
         check_code = code.replace(' ','').replace('\n','')
-        if "importos" in check_code:
+        if "importos" in check_code or "fromos" in check_code:
             raise Exception('You cannot import library "os" for this platform')
-        if "importsys" in check_code:
+        if "importsys" in check_code or "fromsys" in check_code:
             raise Exception('You cannot import library "sys" for this platform')

@@ -3,7 +3,7 @@ from . import question_testcase
 from io import StringIO
 import sys
 
-# allow for user code to import
+# allow for usersolution_code to import
 import collections
 import heapq
 import time
@@ -12,9 +12,9 @@ from collections import *
 
 
 class Tester:
-    def __init__(self, code, question_id):
+    def __init__(self, solution_code, question_id):
         self.checkVulnerability(code)
-        self.code = code
+        self.solution_code =solution_code
         self.test_information = question_testcase.info[question_id]
         self.logic = self.test_information["logic"]
 
@@ -22,8 +22,8 @@ class Tester:
         self.question_testcase = self.test_information["testcase"].copy() 
 
     def exectuteTest(self):
-        # exectue code in string 
-        exec(self.code)
+        # exectuesolution_code in string 
+        exec(self.solution_code)
         user_solution = locals()['Solution']()
         user_func = getattr(user_solution, self.test_information["attr"])
         
@@ -46,8 +46,8 @@ class Tester:
                                                     len(self.question_testcase))
     
 
-    def checkVulnerability(self, code):
-        check_code = code.replace(' ','').replace('\n','')
+    def checkVulnerability(self,solution_code):
+        check_code =solution_code.replace(' ','').replace('\n','')
         if "importos" in check_code or "fromos" in check_code:
             raise Exception('You cannot import library "os" for this platform')
         if "importsys" in check_code or "fromsys" in check_code:

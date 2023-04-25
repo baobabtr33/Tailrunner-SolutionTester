@@ -13,7 +13,7 @@ from collections import *
 
 class Tester:
     def __init__(self, solution_code, question_id):
-        self.checkVulnerability(code)
+        self.checkVulnerability(solution_code)
         self.solution_code =solution_code
         self.test_information = question_testcase.info[question_id]
         self.logic = self.test_information["logic"]

@@ -18,11 +18,11 @@ class Tester:
         self.test_information = question_testcase.info[question_id]
         self.logic = self.test_information["logic"]
 
-        # copy -since python pass by reference
+        # copy, since python pass by reference
         self.question_testcase = self.test_information["testcase"].copy() 
 
-    def exectuteTest(self):
-        # exectuesolution_code in string 
+    def executeTest(self):
+        # exectue solution_code in string as python code
         exec(self.solution_code)
         user_solution = locals()['Solution']()
         user_func = getattr(user_solution, self.test_information["attr"])
@@ -42,9 +42,8 @@ class Tester:
                                                                                     len(self.question_testcase), 
                                                                                     test_case)
         sys.stdout = sys.__stdout__
-        return True, user_print.getvalue(), "Correct, passed {}/{}\n".format(count, 
-                                                    len(self.question_testcase))
-    
+        return True, user_print.getvalue(), "Correct, passed {}/{}\n".format(count, len(self.question_testcase))
+
 
     def checkVulnerability(self,solution_code):
         check_code =solution_code.replace(' ','').replace('\n','')

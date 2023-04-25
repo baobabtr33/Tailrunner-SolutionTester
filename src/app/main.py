@@ -30,7 +30,7 @@ async def process_user_code(submit: Submit, id: int):
     print_msg = ""
     try:
         usertest = Tester(solution_code = submit.code, question_id = id)
-        passed, print_msg, msg = usertest.exectuteTest()
+        passed, print_msg, msg = usertest.executeTest()
     except IndentationError as e:
         passed = False
         msg = "Indentation error: \n"+str(e)

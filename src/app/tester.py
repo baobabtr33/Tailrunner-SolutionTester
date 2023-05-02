@@ -12,6 +12,7 @@ from collections import *
 
 
 class Tester:
+    """ Tester Class for testing user's code for correctness """
     def __init__(self, solution_code, question_id) -> None:
         self.checkVulnerability(solution_code)
         self.solution_code = solution_code
@@ -28,6 +29,9 @@ class Tester:
             return self.oopTest()
 
     def oopTest(self) -> Tuple[bool, str, str]:
+        if not self.checkFunctionExist():
+            return False, "", "Incorrect, function does not exist\n"
+        
         # get user's code system print logs
         user_print = StringIO()
         sys.stdout = user_print
@@ -62,8 +66,6 @@ class Tester:
 
         sys.stdout = sys.__stdout__
         return True, user_print.getvalue(), "Correct, passed {}/{}\n".format(answer_count, len(self.question_testcase))
-        
-        return True, "", "Not implemented yet"
     
     def simpleTest(self) -> Tuple[bool, str, str]:
         # exectue solution_code in string as python code
@@ -96,3 +98,14 @@ class Tester:
             raise Exception('You cannot import library "os" for this platform')
         if "importsys" in check_code or "fromsys" in check_code:
             raise Exception('You cannot import library "sys" for this platform')
+    
+    def checkFunctionExist(self) -> bool:
+        exec(self.solution_code)
+        user_solution = locals()[self.classname]()
+        for funcs in self.test_information["attr"]:
+            print(funcs)
+            if hasattr(user_solution, funcs) and callable(getattr(user_solution, funcs)):
+                pass
+            else:
+                return False
+        return True

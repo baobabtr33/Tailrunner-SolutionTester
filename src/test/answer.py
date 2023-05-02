@@ -222,7 +222,6 @@ class SmallestInfiniteSet:
 
     def popSmallest(self) -> int:
         ret = 0
-        print(self.reuse)
         if self.reuse:
             ret = heapq.heappop(self.reuse)
             return ret

@@ -25,4 +25,4 @@ pnpm-debug.log*
 #script
 run.sh
 docker-update.sh
-
+debug.py

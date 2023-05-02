@@ -209,6 +209,30 @@ class Solution:
                 right = mid
 
         return -1
+""",
+
+18: """
+import heapq
+
+class SmallestInfiniteSet:
+
+    def __init__(self):
+        self.pointer = 1
+        self.reuse = []
+
+    def popSmallest(self) -> int:
+        ret = 0
+        print(self.reuse)
+        if self.reuse:
+            ret = heapq.heappop(self.reuse)
+            return ret
+        ret = self.pointer
+        self.pointer += 1 
+        return ret
+
+    def addBack(self, num: int) -> None:
+        if num not in self.reuse and num < self.pointer:
+            heapq.heappush(self.reuse, num)
 """
 }
 

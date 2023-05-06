@@ -13,6 +13,7 @@ from collections import *
 
 class Tester:
     """ Tester Class for testing user's code for correctness """
+    
     def __init__(self, solution_code, question_id) -> None:
         self.checkVulnerability(solution_code)
         self.solution_code = solution_code
@@ -30,7 +31,7 @@ class Tester:
 
     def oopTest(self) -> Tuple[bool, str, str]:
         if not self.checkFunctionExist():
-            return False, "", "Incorrect, function does not exist\n"
+            return False, "", "Incorrect, function does not exis. Do not change the name of the function\n"
         
         # get user's code system print logs
         user_print = StringIO()
